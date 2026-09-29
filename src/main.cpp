@@ -5,11 +5,5 @@
 #undef setup
 
 void setup() {
-    Serial.begin(115200);
 
-    Serial.println();
-    Serial.println("=== Waiting 10 seconds before startup ===");
-    delay(10000);
-
-    upstreamSetup();
 }
