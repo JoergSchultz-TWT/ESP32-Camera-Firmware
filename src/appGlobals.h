@@ -297,6 +297,7 @@ extern bool streamSrt;
 extern uint8_t numStreams;
 extern uint8_t vidStreams;
 
+esp_err_t registerCameraApi(httpd_handle_t server);
 #ifndef AUXILIARY
 extern framesize_t maxFS;
 #endif

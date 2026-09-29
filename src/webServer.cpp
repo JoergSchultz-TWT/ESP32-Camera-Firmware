@@ -4,7 +4,7 @@
 
 #include "appGlobals.h"
 
-#define MAX_HANDLERS 12
+#define MAX_HANDLERS 14
 
 char inFileName[IN_FILE_NAME_LEN];
 static char variable[FILE_NAME_LEN]; 
@@ -696,6 +696,7 @@ bool startWebServer() {
     httpd_register_uri_handler(httpServer, &wsUri);
     httpd_register_uri_handler(httpServer, &sustainUri);
     httpd_register_uri_handler(httpServer, &checkUri);
+    registerCameraApi(httpServer);
     httpd_register_err_handler(httpServer, HTTPD_404_NOT_FOUND, customOrNotFoundHandler);
 
     LOG_INF("Starting web server on port: %u", useHttps ? HTTPS_PORT : HTTP_PORT);
