@@ -109,6 +109,8 @@ bool appDataFiles();
 bool appSetup(); 
 bool appSpecificSMTP();
 esp_err_t appSpecificSustainHandler(httpd_req_t* req);
+bool isLiveStreamActive();
+void stopLiveStream();
 esp_err_t appSpecificWebHandler(httpd_req_t *req, const char* variable, const char* value);
 void appSpecificWsBinHandler(uint8_t* wsMsg, size_t wsMsgLen);
 void appSpecificWsHandler(const char* wsMsg);

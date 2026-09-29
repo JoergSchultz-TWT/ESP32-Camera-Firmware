@@ -4,7 +4,7 @@
 
 #include "appGlobals.h"
 
-#define MAX_HANDLERS 14
+#define MAX_HANDLERS 16
 
 char inFileName[IN_FILE_NAME_LEN];
 static char variable[FILE_NAME_LEN]; 

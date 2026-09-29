@@ -254,6 +254,14 @@ void stopSustainTask(int taskId) {
   if (taskId < vidStreams && frameSemaphore[taskId] != NULL) xSemaphoreGive(frameSemaphore[taskId]);
 }
 
+bool isLiveStreamActive() {
+  return sustainReq[0].inUse && !strcmp(sustainReq[0].activity, "stream");
+}
+
+void stopLiveStream() {
+  if (isLiveStreamActive()) stopSustainTask(0);
+}
+
 static void sustainTask(void* p) {
   // process sustained http(s) requests as a separate task 
   while (true) {
@@ -308,7 +316,14 @@ esp_err_t appSpecificSustainHandler(httpd_req_t* req) {
   if (checkAuth(req)) { 
     // handle long running request as separate task
     // obtain details from query string
-    if (extractQueryKeyVal(req, variable, value, sizeof(value)) == ESP_OK) {
+    // /stream is the public API alias for the existing /sustain?stream=1
+    // implementation. Keep both paths on the same sustain task and handler.
+    bool directStream = !strcmp(req->uri, "/stream");
+    if (directStream || extractQueryKeyVal(req, variable, value, sizeof(value)) == ESP_OK) {
+      if (directStream) {
+        strcpy(variable, "stream");
+        strcpy(value, "1");
+      }
       // playback, download, web streaming uses task 0
       // remote streaming eg video uses task 1, audio task 2, srt task 3
       uint8_t taskNum = 99;
