@@ -1058,6 +1058,10 @@ bool prepCam() {
           sprintf(camModel, "PID=0x%X", s->id.PID);
           break;
       }
+      if (PID == OV2640_PID || PID == OV3660_PID || PID == OV5640_PID || PID == MEGA_CCM_PID)
+        LOG_INF("Camera sensor PID=0x%04X model=%s board=%s", PID, camModel, CAM_BOARD);
+      else
+        LOG_WRN("Unknown sensor (PID=0x%04X) board=%s", PID, CAM_BOARD);
       // set frame size to configured value
       char fsizePtrStr[4];
       if (retrieveConfigVal("framesize", fsizePtrStr)) s->set_framesize(s, (framesize_t)(atoi(fsizePtrStr)));
